@@ -1,0 +1,8 @@
+---
+profile: hawkeye_hk5130
+target: mvebu
+subtarget: cortexa72
+description: Build image for Hawkeye HK5130/5140 Series
+image: openwrt-mvebu-cortexa72-hawkeye_hk5130-squashfs-sdcard.img.gz
+include:
+  - ucentral-ap
