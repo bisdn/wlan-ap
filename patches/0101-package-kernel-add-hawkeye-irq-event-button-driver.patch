@@ -1,0 +1,374 @@
+From 8840b02aa6a28a93b80d680d667c357bf62314e2 Mon Sep 17 00:00:00 2001
+From: Jonas Gorski <jonas.gorski@bisdn.de>
+Date: Wed, 7 Aug 2024 11:08:37 +0000
+Subject: [PATCH 1/3] package: kernel: add hawkeye irq event button driver
+
+Add Hawkeye IRQ event button driver as used for HK5130.
+
+Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
+---
+ .../kernel/hawkeye-irq-event-button/Makefile  |  34 ++++
+ .../hawkeye-irq-event-button/src/Makefile     |   4 +
+ .../hawkeye-irq-event-button/src/README       |  45 +++++
+ .../hawkeye-irq-event-button/src/irq_button.c | 183 ++++++++++++++++++
+ .../hawkeye-irq-event-button/src/kcompat.c    |  29 +++
+ .../hawkeye-irq-event-button/src/kcompat.h    |  17 ++
+ 6 files changed, 312 insertions(+)
+ create mode 100644 package/kernel/hawkeye-irq-event-button/Makefile
+ create mode 100644 package/kernel/hawkeye-irq-event-button/src/Makefile
+ create mode 100644 package/kernel/hawkeye-irq-event-button/src/README
+ create mode 100644 package/kernel/hawkeye-irq-event-button/src/irq_button.c
+ create mode 100644 package/kernel/hawkeye-irq-event-button/src/kcompat.c
+ create mode 100644 package/kernel/hawkeye-irq-event-button/src/kcompat.h
+
+diff --git a/package/kernel/hawkeye-irq-event-button/Makefile b/package/kernel/hawkeye-irq-event-button/Makefile
+new file mode 100644
+index 0000000000..0d47e8f630
+--- /dev/null
++++ b/package/kernel/hawkeye-irq-event-button/Makefile
+@@ -0,0 +1,34 @@
++#
++# Copyright (C) 2008-2012 OpenWrt.org
++#
++# This is free software, licensed under the GNU General Public License v2.
++# See /LICENSE for more information.
++#
++
++include $(TOPDIR)/rules.mk
++include $(INCLUDE_DIR)/kernel.mk
++
++PKG_NAME:=hawkeye-irq-event-button
++PKG_RELEASE:=3
++PKG_LICENSE:=GPL-2.0
++
++include $(INCLUDE_DIR)/package.mk
++
++define KernelPackage/hawkeye-irq-event-button
++  SUBMENU:=Other modules
++  TITLE:=Hawkeye IRQ event button driver
++  FILES:=$(PKG_BUILD_DIR)/event_button.ko
++  AUTOLOAD:=$(call AutoLoad,30,event_button,1)
++  KCONFIG:=
++endef
++
++define KernelPackage/hawkeye-irq-event-button/description
++  This package offers the event button driver for Hawkeye platform with
++IRQ-based button design.
++endef
++
++define Build/Compile
++	$(KERNEL_MAKE) M="$(PKG_BUILD_DIR)" modules
++endef
++
++$(eval $(call KernelPackage,hawkeye-irq-event-button))
+diff --git a/package/kernel/hawkeye-irq-event-button/src/Makefile b/package/kernel/hawkeye-irq-event-button/src/Makefile
+new file mode 100644
+index 0000000000..481bb396a6
+--- /dev/null
++++ b/package/kernel/hawkeye-irq-event-button/src/Makefile
+@@ -0,0 +1,4 @@
++TARGET = event_button
++
++obj-m := $(TARGET).o
++$(TARGET)-objs := kcompat.o irq_button.o
+diff --git a/package/kernel/hawkeye-irq-event-button/src/README b/package/kernel/hawkeye-irq-event-button/src/README
+new file mode 100644
+index 0000000000..b1d245271e
+--- /dev/null
++++ b/package/kernel/hawkeye-irq-event-button/src/README
+@@ -0,0 +1,45 @@
++[Introduction]
++	This package offers the event button driver for Hawkeye platform with
++IRQ-based button design.
++
++[Device Tree Bindings]
++	Required properties:
++	- compatible     : Should be "hawkeye,irq-buttons"
++
++	Each event button is represented as a sub-node of the irq-button device.
++	Each node's name represents the name of the corresponding LED.
++
++	Event button sub-node properties:
++	- interrupts     : Interrupt specification for event button.
++
++
++	Example:
++	
++	irq-buttons {
++		compatible = "hawkeye,irq-buttons";
++		event1 {
++			interrupts = <GIC_SPI 1 IRQ_TYPE_EDGE_RISING>;
++		};
++		power {
++			interrupts = <GIC_SPI 6 IRQ_TYPE_EDGE_RISING>;
++		};
++	};
++
++[Driver Building and Usage]
++	# make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- KDIR=/flexbuild/build/linux/linux/arm64/output/
++	# insmod event_button.ko
++
++[Usage]
++	The driver provides two sysfs nodes for each event button under /sys/class/misc/event_button:
++
++	trigger - Read only. To get number of times event button has been triggered.
++	clean   - Write only. To clean trigger times of event button.
++
++
++	Example:
++
++	To get number of times "event1" button has bee triggered,
++	# cat /sys/class/misc/event_button/event1_trigger
++
++	To clean trigger times of "event1" button,
++	# echo 0 > /sys/class/misc/event_button/event1_clean
+diff --git a/package/kernel/hawkeye-irq-event-button/src/irq_button.c b/package/kernel/hawkeye-irq-event-button/src/irq_button.c
+new file mode 100644
+index 0000000000..0be2b4f2a4
+--- /dev/null
++++ b/package/kernel/hawkeye-irq-event-button/src/irq_button.c
+@@ -0,0 +1,183 @@
++/*******************************************************************************
++
++Hawkeye Tech. IRQ-based Event Button Driver
++Copyright (C) 2021  Angus <angus@hawkeyetech.com.tw>
++
++This program is free software; you can redistribute it and/or 
++modify it under the terms of the GNU General Public License
++as published by the Free Software Foundation; either version 2
++of the License, or (at your option) any later version.
++
++This program is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
++GNU General Public License for more details.
++
++You should have received a copy of the GNU General Public License
++along with this program; if not, write to the Free Software 
++Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
++
++*******************************************************************************/
++
++#include <linux/init.h>
++#include <linux/module.h>
++#include <linux/kernel.h>
++#include <linux/slab.h>
++#include <linux/interrupt.h>
++#include <linux/of_irq.h>
++#include <linux/hwmon-sysfs.h>
++#include <linux/miscdevice.h>
++
++#include "kcompat.h"
++
++struct irq_button_data {
++	char name[32];
++	int irq;
++	struct resource resource;
++	int press;
++};
++
++#define DRV_NAME "event_button"
++
++#define MAX_IRQ_BUTTONS 16
++
++#define SDA_ATTR &sda->dev_attr.attr
++
++static struct miscdevice mdev = {
++	.minor = MISC_DYNAMIC_MINOR,
++	.name = DRV_NAME,
++};
++
++static struct irq_button_data irq_buttons[MAX_IRQ_BUTTONS];
++static struct attribute_group irq_button_defattr_group;
++
++static ssize_t irq_button_sysfs_trigger(struct device *dev, struct device_attribute *attr, char *buf)
++{
++	struct sensor_device_attribute *sda = to_sensor_dev_attr(attr);
++	ssize_t len = 0;
++
++	if (sda->index < MAX_IRQ_BUTTONS) {
++		len = sprintf(buf, "%d\n", irq_buttons[sda->index].press);
++	} else {
++		BUG();
++	}
++
++	return len;
++}
++
++static ssize_t irq_button_sysfs_clean(struct device *dev, struct device_attribute *attr, const char *buf, size_t count)
++{
++	struct sensor_device_attribute *sda = to_sensor_dev_attr(attr);
++
++	if (sda->index < MAX_IRQ_BUTTONS) {
++		irq_buttons[sda->index].press = 0;
++	} else {
++		BUG();
++	}
++
++	return count;
++}
++
++irqreturn_t irq_button_handler(int irq, void *arg)
++{
++	struct irq_button_data *data = (struct irq_button_data *)arg;
++
++	data->press++;
++
++	return IRQ_HANDLED;
++}
++
++struct sensor_device_attribute *create_sda(char *name, umode_t mode,
++					   ssize_t (*show)(struct device *dev, struct device_attribute *attr, char *buf),
++					   ssize_t (*store)(struct device *dev, struct device_attribute *attr, const char *buf, size_t count),
++					   int index)
++{
++	struct sensor_device_attribute *sda;
++
++	sda = kmalloc(sizeof(struct sensor_device_attribute), GFP_KERNEL);
++	sda->dev_attr.attr.name = kmalloc(sizeof(char) * 32, GFP_KERNEL);
++	sprintf((char *)sda->dev_attr.attr.name, "%s_%s", irq_buttons[index].name, name);
++	sda->dev_attr.attr.mode = mode;
++	sda->dev_attr.show = show;
++	sda->dev_attr.store = store;
++	sda->index = index;
++
++	return sda;
++}
++
++static int __init irq_button_init(void)
++{
++	struct device_node *root, *child;
++	struct sensor_device_attribute *sda;
++	int i, irq_trigger, button_num = 0;
++
++	root = of_find_compatible_node(NULL, NULL, "hawkeye,irq-buttons");
++	if (!root) {
++		return -ENODEV;
++	}
++
++	/* Register IRQ event */
++	for_each_child_of_node(root, child) {
++		sprintf(irq_buttons[button_num].name, "%s", child->name);
++		irq_buttons[button_num].irq = of_irq_get(child, 0);
++		if (irq_buttons[button_num].irq < 0) {
++			goto err_irq;
++		}
++
++		irq_trigger = irqd_get_trigger_type(irq_get_irq_data(irq_buttons[button_num].irq));
++		if (request_irq(irq_buttons[button_num].irq, (irq_handler_t) irq_button_handler, irq_trigger, irq_buttons[button_num].name, &irq_buttons[button_num])) {
++			printk(KERN_ERR "%s interrrupt can't register on IRQ%d /n", irq_buttons[button_num].name, irq_buttons[button_num].irq);
++			goto err_irq;
++		}
++		button_num++;
++	}
++
++	misc_register(&mdev);
++
++	/* Create sysfs node */
++	irq_button_defattr_group.attrs = kmalloc(sizeof(struct attribute **) * (MAX_IRQ_BUTTONS * 2 + 1), GFP_KERNEL);
++	for (i = 0; i < button_num; i++) {
++		sda = create_sda("trigger", S_IRUGO, irq_button_sysfs_trigger, NULL, i);
++		irq_button_defattr_group.attrs[i * 2] = SDA_ATTR;
++		sda = create_sda("clean", S_IWUSR, NULL, irq_button_sysfs_clean, i);
++		irq_button_defattr_group.attrs[i * 2 + 1] = SDA_ATTR;
++	}
++	irq_button_defattr_group.attrs[i * 2] = NULL;
++
++	if (sysfs_create_group(&mdev.this_device->kobj, &irq_button_defattr_group)) {
++		goto err_sysfs;
++	}
++
++	return 0;
++
++err_sysfs:
++	misc_deregister(&mdev);
++err_irq:
++	for (i = 0; i < button_num; i++) {
++		free_irq(irq_buttons[i].irq, &irq_buttons[i]);
++	}
++
++	return -EIO;
++}
++
++static void  __exit irq_button_exit(void)
++{
++	int i;
++
++	sysfs_remove_group(&mdev.this_device->kobj, &irq_button_defattr_group);
++
++	for (i = 0; i < MAX_IRQ_BUTTONS; i++) {
++		if (irq_buttons[i].irq != 0) {
++			free_irq(irq_buttons[i].irq, &irq_buttons[i]);
++		}
++	}
++
++	misc_deregister(&mdev);
++}
++
++MODULE_AUTHOR("Angus <angus@hawkeyetech.com.tw>");
++MODULE_DESCRIPTION("Hawkeye Tech. IRQ-based Event Button Driver");
++MODULE_LICENSE("GPL");
++
++module_init(irq_button_init);
++module_exit(irq_button_exit);
+diff --git a/package/kernel/hawkeye-irq-event-button/src/kcompat.c b/package/kernel/hawkeye-irq-event-button/src/kcompat.c
+new file mode 100644
+index 0000000000..fa63219c2f
+--- /dev/null
++++ b/package/kernel/hawkeye-irq-event-button/src/kcompat.c
+@@ -0,0 +1,29 @@
++#include "kcompat.h"
++
++#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 14, 6)
++/**
++ * of_irq_get - Decode a node's IRQ and return it as a Linux irq number
++ * @dev: pointer to device tree node
++ * @index: zero-based index of the irq
++ *
++ * Returns Linux irq number on success, or -EPROBE_DEFER if the irq domain
++ * is not yet created.
++ *
++ */
++int of_irq_get(struct device_node *dev, int index)
++{
++	int rc;
++	struct of_phandle_args oirq;
++	struct irq_domain *domain;
++
++	rc = of_irq_parse_one(dev, index, &oirq);
++	if (rc)
++		return rc;
++
++	domain = irq_find_host(oirq.np);
++	if (!domain)
++		return -EPROBE_DEFER;
++
++	return irq_create_of_mapping(&oirq);
++}
++#endif
+diff --git a/package/kernel/hawkeye-irq-event-button/src/kcompat.h b/package/kernel/hawkeye-irq-event-button/src/kcompat.h
+new file mode 100644
+index 0000000000..5d348d026d
+--- /dev/null
++++ b/package/kernel/hawkeye-irq-event-button/src/kcompat.h
+@@ -0,0 +1,17 @@
++#ifndef _KCOMPAT_H_
++#define _KCOMPAT_H_
++
++#ifndef LINUX_VERSION_CODE
++#include <linux/version.h>
++#else
++#define KERNEL_VERSION(a,b,c) (((a) << 16) + ((b) << 8) + (c))
++#endif
++#include <linux/errno.h>
++#include <linux/of.h>
++#include <linux/of_irq.h>
++
++#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 14, 6)
++int of_irq_get(struct device_node *dev, int index);
++#endif
++
++#endif // __KCOMPAT_H_
+-- 
+2.34.1
+
