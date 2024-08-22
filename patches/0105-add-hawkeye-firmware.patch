@@ -1,0 +1,26 @@
+From b4d8e5abcc8f7fba292d5cbedc7bf2cdb16fdf5c Mon Sep 17 00:00:00 2001
+From: Jonas Gorski <jonas.gorski@bisdn.de>
+Date: Wed, 21 Aug 2024 11:59:06 +0000
+Subject: [PATCH 2/2] add hawkeye firmware
+
+Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
+---
+ target/linux/mvebu/image/cortexa72.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/linux/mvebu/image/cortexa72.mk b/target/linux/mvebu/image/cortexa72.mk
+index d75f8b09e9..9f758ef407 100644
+--- a/target/linux/mvebu/image/cortexa72.mk
++++ b/target/linux/mvebu/image/cortexa72.mk
+@@ -84,7 +84,7 @@ define Device/hawkeye_hk5130
+   BOOT_SCRIPT = hawkeye
+   DEVICE_VENDOR := Hawkeye
+   DEVICE_MODEL := HK5130
+-  DEVICE_PACKAGES += kmod-ath11k-pci ath11k-firmware-qcn9074 kmod-hawkeye-hwmon-max6639 kmod-hawkyeve-irq-event-button
++  DEVICE_PACKAGES += kmod-ath11k-pci ath11k-firmware-qcn9074 kmod-hawkeye-hwmon-max6639 kmod-hawkyeve-irq-event-button ipq-wifi-hawkeye_hk5130
+   DEVICE_DTS := hk5130 hk5131 hk5140 hk5141
+   SOC := cn9132
+ endef
+-- 
+2.34.1
+
