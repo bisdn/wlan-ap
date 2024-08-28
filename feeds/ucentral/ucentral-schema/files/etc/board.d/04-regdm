@@ -22,6 +22,10 @@ cig,wf188n)
 cig,wf196)
         ucidef_set_wifi_country "US CA"
         ;;
+hawkeye,hk-5130|\
+hawkeye,hk-5131)
+        ucidef_set_wifi_country "DE"
+	;;
 esac
 
 board_config_flush
