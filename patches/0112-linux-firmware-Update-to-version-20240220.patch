@@ -1,0 +1,60 @@
+From 28a3f7a863a21779751238a17cd3623903995dd7 Mon Sep 17 00:00:00 2001
+From: Hauke Mehrtens <hauke@hauke-m.de>
+Date: Thu, 22 Feb 2024 21:33:45 +0100
+Subject: [PATCH 5/5] linux-firmware: Update to version 20240220
+
+This updates the following firmware files:
+airoha-en8811h-firmware/lib/firmware/airoha/EthMD32.DSP.bin
+airoha-en8811h-firmware/lib/firmware/airoha/EthMD32.dm.bin
+amdgpu-firmware (Many files)
+ar3k-firmware/lib/firmware/qca/hpnv21.bin
+ar3k-firmware/lib/firmware/qca/hpnv21g.bin
+ath10k-board-qca4019/lib/firmware/ath10k/QCA4019/hw1.0/board-2.bin
+ath10k-board-qca9888/lib/firmware/ath10k/QCA9888/hw2.0/board-2.bin
+ath10k-firmware-qca6174/lib/firmware/ath10k/QCA6174/hw3.0/firmware-6.bin
+ath11k-firmware-wcn6750/lib/firmware/ath11k/WCN6750/hw1.0/board-2.bin
+ath11k-firmware-wcn6855/lib/firmware/ath11k/WCN6855/hw2.0/amss.bin
+ath11k-firmware-wcn6855/lib/firmware/ath11k/WCN6855/hw2.0/board-2.bin
+ath11k-firmware-wcn6855/lib/firmware/ath11k/WCN6855/hw2.1/amss.bin
+ath11k-firmware-wcn6855/lib/firmware/ath11k/WCN6855/hw2.1/board-2.bin
+ibt-firmware/lib/firmware/intel/ibt-0040-0041.ddc
+ibt-firmware/lib/firmware/intel/ibt-0040-0041.sfi
+ibt-firmware/lib/firmware/intel/ibt-0040-1050.sfi
+ibt-firmware/lib/firmware/intel/ibt-0040-4150.sfi
+ibt-firmware/lib/firmware/intel/ibt-0041-0041.sfi
+ibt-firmware/lib/firmware/intel/ibt-0180-0041.sfi
+ibt-firmware/lib/firmware/intel/ibt-0180-1050.sfi
+ibt-firmware/lib/firmware/intel/ibt-0180-4150.sfi
+ibt-firmware/lib/firmware/intel/ibt-1040-0041.sfi
+ibt-firmware/lib/firmware/intel/ibt-1040-4150.sfi
+iwlwifi-firmware-be200/lib/firmware/iwlwifi-gl-c0-fm-c0-83.ucode
+iwlwifi-firmware-be200/lib/firmware/iwlwifi-gl-c0-fm-c0.pnvm
+
+Signed-off-by: Hauke Mehrtens <hauke@hauke-m.de>
+---
+ package/firmware/linux-firmware/Makefile | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/package/firmware/linux-firmware/Makefile b/package/firmware/linux-firmware/Makefile
+index f7f1f978e3..d056140f45 100644
+--- a/package/firmware/linux-firmware/Makefile
++++ b/package/firmware/linux-firmware/Makefile
+@@ -8,12 +8,12 @@
+ include $(TOPDIR)/rules.mk
+ 
+ PKG_NAME:=linux-firmware
+-PKG_VERSION:=20231211
+-PKG_RELEASE:=2
++PKG_VERSION:=20240220
++PKG_RELEASE:=1
+ 
+ PKG_SOURCE_URL:=@KERNEL/linux/kernel/firmware
+ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
+-PKG_HASH:=96af7e4b5eabd37869cdb3dcbb7ab36911106d39b76e799fa1caab16a9dbe8bb
++PKG_HASH:=bf0f239dc0801e9d6bf5d5fb3e2f549575632cf4688f4348184199cb02c2bcd7
+ 
+ PKG_MAINTAINER:=Felix Fietkau <nbd@nbd.name>
+ 
+-- 
+2.34.1
+

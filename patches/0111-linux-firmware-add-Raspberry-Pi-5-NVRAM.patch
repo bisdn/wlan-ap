@@ -1,0 +1,54 @@
+From ecb666550bd10a34a7c1329b7c2f60a6ac14216d Mon Sep 17 00:00:00 2001
+From: Marty Jones <mj8263788@gmail.com>
+Date: Mon, 6 Nov 2023 22:21:44 -0500
+Subject: [PATCH 4/5] linux-firmware: add Raspberry Pi 5 NVRAM
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The RPi 5 expects the same NVRAM as the one from RPi 4 on a different file.
+
+Signed-off-by: Marty Jones <mj8263788@gmail.com>
+[Reword commit description, add missing PKG_RELEASE bump]
+Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
+---
+ package/firmware/linux-firmware/Makefile    | 2 +-
+ package/firmware/linux-firmware/broadcom.mk | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/package/firmware/linux-firmware/Makefile b/package/firmware/linux-firmware/Makefile
+index 79341c30cb..f7f1f978e3 100644
+--- a/package/firmware/linux-firmware/Makefile
++++ b/package/firmware/linux-firmware/Makefile
+@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
+ 
+ PKG_NAME:=linux-firmware
+ PKG_VERSION:=20231211
+-PKG_RELEASE:=1
++PKG_RELEASE:=2
+ 
+ PKG_SOURCE_URL:=@KERNEL/linux/kernel/firmware
+ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
+diff --git a/package/firmware/linux-firmware/broadcom.mk b/package/firmware/linux-firmware/broadcom.mk
+index 48d986e218..7df5aae349 100644
+--- a/package/firmware/linux-firmware/broadcom.mk
++++ b/package/firmware/linux-firmware/broadcom.mk
+@@ -125,9 +125,15 @@ define Package/brcmfmac-nvram-43455-sdio/install
+ 	$(LN) \
+ 		brcmfmac43455-sdio.raspberrypi,4-model-b.txt \
+ 		$(1)/lib/firmware/brcm/brcmfmac43455-sdio.Raspberry\ Pi\ Foundation-Raspberry\ Pi\ 4\ Model\ B.txt
++	$(LN) \
++		brcmfmac43455-sdio.raspberrypi,4-model-b.txt \
++		$(1)/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,5-model-b.txt
+ 	$(LN) \
+ 		brcmfmac43455-sdio.raspberrypi,4-model-b.txt \
+ 		$(1)/lib/firmware/brcm/brcmfmac43455-sdio.Raspberry\ Pi\ Foundation-Raspberry\ Pi\ Compute\ Module\ 4.txt
++	$(LN) \
++		brcmfmac43455-sdio.raspberrypi,4-model-b.txt \
++		$(1)/lib/firmware/brcm/brcmfmac43455-sdio.Raspberry\ Pi\ Foundation-Raspberry\ Pi\ 5\ Model\ B.txt
+ 	$(INSTALL_DATA) \
+ 		$(PKG_BUILD_DIR)/brcm/brcmfmac43455-sdio.MINIX-NEO\ Z83-4.txt \
+ 		$(1)/lib/firmware/brcm/
+-- 
+2.34.1
+
