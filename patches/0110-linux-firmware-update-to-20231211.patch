@@ -1,0 +1,336 @@
+From e989871bc92b699b49077fa8dc4fb5635bf7d232 Mon Sep 17 00:00:00 2001
+From: Tianling Shen <cnsztl@immortalwrt.org>
+Date: Fri, 15 Dec 2023 18:32:18 +0800
+Subject: [PATCH 3/5] linux-firmware: update to 20231211
+
+06fa7dd2 cxgb4: Update firmware to revision 1.27.4.0
+fd44bdae amdgpu: DMCUB updates for various AMDGPU asics
+7ed62638 Revert "rtl_bt: Update RTL8852C BT USB firmware to 0x040D_7225"
+42d31f8f rtl_bt: Add firmware v2 file for RTL8852C
+0ab353f8 Merge branch 'for-upstream' of http://git.chelsio.net/pub/git/linux-firmware
+f2eb058a linux-firmware: Update AMD cpu microcode
+980373f5 cirrus: Add CS35L41 firmware for HP G11 models
+789aa815 amdgpu: partially revert firmware for GC 11.0.0 and GC 11.0.2
+ae80f1f1 Revert "amdgpu: partially revert firmware for GC 11.0.0 and GC 11.0.2"
+6c089c10 amdgpu: DMCUB updates for various AMDGPU asics
+0e048b06 Merge branch 'for-upstream' of https://github.com/CirrusLogic/linux-firmware
+5eeda20d amdgpu: DMCUB updates for various AMDGPU asics
+81caac98 i915: add GSC 102.0.0.1655 for MTL
+ca49c8cf rtw89: 8851b: update fw to v0.29.41.2
+ef41ae8f rtw89: 8852b: update fw to v0.29.29.3
+a33f8f1a amdgpu: update DMCUB to 0.0.181.0 for various AMDGPU ASICs
+97e88a0d linux-firmware: Update AMD SEV firmware
+d0172b89 linux-firmware: update firmware for qat_4xxx devices
+50da38ee Merge branch 'mtl_gsc_1655' of git://anongit.freedesktop.org/drm/drm-firmware
+fc45c425 linux-firmware: Update firmware file for Intel Bluetooth AX201
+3892dc01 linux-firmware: Update firmware file for Intel Bluetooth AX200
+606a17b1 linux-firmware: Update firmware file for Intel Bluetooth AX210
+55545299 linux-firmware: Update firmware file for Intel Bluetooth AX211
+904880ad linux-firmware: Update firmware file for Intel Bluetooth AX211
+e6c09397 linux-firmware: Update firmware file for Intel Bluetooth AX203
+51e9ea58 linux-firmware: Update firmware file for Intel Bluetooth AX203
+58773db5 Merge https://github.com/pkshih/linux-firmware
+2bad80e7 copy-firmware: Support additional compressor options
+db99828b copy-firmware: Introduce 'RawFile' keyword
+becc678d Merge tag 'amd-2023-08-18' of https://gitlab.freedesktop.org/drm/firmware
+659dfe64 Merge tag 'amd-2023-08-25' of https://gitlab.freedesktop.org/drm/firmware
+49f9e347 i915: Update MTL DMC to v2.16
+8e1fe1bd Merge branch 'dmc-mtl_2.16' of git://anongit.freedesktop.org/drm/drm-firmware
+27fb2f63 check_whence: reformat using python black
+c442a500 Add pre-commit hooks and codespell template
+5e2367f8 Wire up pre-commit to `make check`
+408eb34a Rewrite README in markdown
+5ebb5914 Merge branch 'mlimonci/update-ci' into 'main'
+792115b2 Add Dockerfile used to build CI image
+69e68cde Add gitlab ci for calling pre-commit and ci-fairy
+b2f03c84 Add a rule for automatic tagging releases by pipeline schedule
+c79933a8 Fix carl9170fw shell scripts for shellcheck errors
+8976d8c3 Add shellcheck pre-commit target
+1edd2d6f QCA: Update Bluetooth WCN685x 2.1 firmware to 2.1.0-00605
+61501389 Merge branch 'mlimonci/enable-pre-commit-ci' into 'main'
+6c097314 Merge branch 'mlimonci/shellcheck' into 'main'
+3e79f6b8 Create symlinks for all firmware that is duplicate using rdfind
+bcc397d6 Add new toplevel 'make dist' target.
+f12059b7 Capture artifacts from `make dist` to save at release time.
+d5c485f9 Only run ci-fairy on merge requests
+bb4f6589 Merge branch 'mlimonci/skip-ci-fairy-for-main' into 'main'
+c57a9388 Merge https://github.com/tjiang1234/btfw-wcn6855-605
+80de4d8a check_whence: Recognize RawFile keyword
+c6ce6ac0 WHENCE: amd-ucode: Use new RawFile keyword
+e805619f WHENCE: Don't compress qcom json files
+7d8f2d95 Merge branch 'RawFile' into 'main'
+a0142c57 ath10k/WCN3990: move wlanmdsp to qcom/sdm845
+fe85b0c7 Merge branch 'qcom' into 'main'
+20d250e3 Merge branch 'mlimonci/make-dist' into 'main'
+9f3ec3a8 qcom: add GPU firmware for QCM2290 / QRB2210
+a32c8568 qcom: add firmware for QCM2290 platforms
+89659cb9 qcom: add firmware for QRB4210 platforms
+106ff9f9 qcom: add venus firmware files for v6.0
+74cc8ca8 qcom: add firmware for the onboard WiFi on qcm2290 / qrb4210
+1346f922 qcom: sm8250: update DSP firmware
+adeabfda qcom: Update vpu-1.0 firmware
+bb3d5bc9 qcom: sm8250: add RB5 sensors DSP firmware
+7d94e0fa linux-firmware: add link to sc8280xp audioreach firmware
+ad03b851 Merge branch 'rb12-fw-v2' into 'main'
+28935de4 Merge branch 'rb5-update' of https://github.com/lumag/linux-firmware into rb5-update
+473be1c4 Merge branch 'rb5-update' into 'main'
+60458657 Merge branch 'sc8280xp-audio-fw-fixes' of https://git.kernel.org/pub/scm/linux/kernel/git/srini/linux-firmware into sc8280xp-audio-fw-fixes
+cb926295 Merge branch 'sc8280xp-audio-fw-fixes' into 'main'
+c801b3b8 Turn off textwidth check
+dfa11466 Merge branch 'main' into 'main'
+2bbca647 amdgpu: update DMCUB to 0.0.183.0 for various AMDGPU ASICs
+a5dbe400 i915: update MTL HuC to version 8.5.4
+3a9bcf45 Merge branch 'main' into 'main'
+d252e92d linux-firmware: amd-ucode: Add note on fam19h warnings
+3a07aa51 Merge branch 'amd-ucode' into 'main'
+3786ca8f Merge branch 'mtl_huc_8.5.4' of git://anongit.freedesktop.org/drm/drm-firmware into mtl_huc
+919300d1 Merge branch 'mtl_huc' into 'main'
+f48da6da Run merge request pipelines for pre-commit.
+3672ccab Merge branch 'mlimonci/fix-merge-requests-ci' into 'main'
+08532e36 iwlwifi: update cc/Qu/QuZ firmwares for core81-65 release
+765492b8 iwlwifi: add new FWs from core81-65 release
+29b47c59 Merge branch 'main' into 'main'
+addc3392 rtl_bt: Update RTL8851B BT USB firmware to 0x048A_D230
+1ed8d8bf linux-firmware: Update FW files for MRVL PCIE 8997 chipsets
+7d1f06ab Merge branch 'rtl_bt' into 'main'
+74830f66 Merge branch 'mrvl' into 'main'
+328beacb amd_pmf: Add initial PMF TA for Smart PC Solution Builder
+8b855f37 Merge branch 'main' into 'main'
+a6744df8 iwlwifi: add FWs for new GL and MA device types with multiple RF modules
+1c285c0a amdgpu: update aldebaran firmware from 5.7 branch
+f9366fa1 amdgpu: update GC 11.0.3 firmware from 5.7 branch
+b21bd580 amdgpu: update PSP 13.0.10 firmware from 5.7 branch
+5a99cd50 amdgpu: update SMU 13.0.10 firmware from 5.7 branch
+abe39de3 amdgpu: update raven2 firmware from 5.7 branch
+7f027004 amdgpu: update navi10 firmware from 5.7 branch
+c25d0ef6 amdgpu: update yellow carp firmware from 5.7 branch
+aa67101a amdgpu: update GC 11.0.2 firmware from 5.7 branch
+22ca16ee amdgpu: update PSP 13.0.7 firmware from 5.7 branch
+a3b30e39 amdgpu: update SDMA 6.0.2 firmware from 5.7 branch
+971fe4bd amdgpu: update SMU 13.0.7 firmware from 5.7 branch
+fd688e37 amdgpu: update VCN 4.0.4 firmware from 5.7 branch
+17a48ca2 amdgpu: update navi12 firmware from 5.7 branch
+d850220b amdgpu: update renoir firmware from 5.7 branch
+fcf92700 amdgpu: update navi14 firmware from 5.7 branch
+a34604d3 amdgpu: update GC 11.0.1 firmware from 5.7 branch
+7b785ce1 amdgpu: update PSP 13.0.4 firmware from 5.7 branch
+ab618fa5 amdgpu: update SDMA 6.0.1 firmware from 5.7 branch
+4ee8dc91 amdgpu: update GC 11.0.4 firmware from 5.7 branch
+c09f4219 amdgpu: update PSP 13.0.11 firmware from 5.7 branch
+b828f43c amdgpu: update sienna cichlid firmware from 5.7 branch
+f8f3d52e amdgpu: update green sardine firmware from 5.7 branch
+7d8a4a06 amdgpu: update vangogh firmware from 5.7 branch
+e6a3c06e amdgpu: update navy flounder firmware from 5.7 branch
+5e40e6c2 amdgpu: update picasso firmware from 5.7 branch
+51637156 amdgpu: update dimgrey cavefish firmware from 5.7 branch
+08e23f2c amdgpu: update vega10 firmware from 5.7 branch
+050fe578 amdgpu: update vega12 firmware from 5.7 branch
+ee81c65c amdgpu: update beige goby firmware from 5.7 branch
+0923446e amdgpu: update vega20 firmware from 5.7 branch
+c321aeee amdgpu: update GC 11.0.0 firmware from 5.7 branch
+7baff8dd amdgpu: update PSP 13.0.0 firmware from 5.7 branch
+9973966a amdgpu: update SDMA 6.0.0 firmware from 5.7 branch
+af3d18b3 amdgpu: update SMU 13.0.0 firmware from 5.7 branch
+b65ac01b amdgpu: update VCN 4.0.0 firmware from 5.7 branch
+a92f8f21 amdgpu: update GC 10.3.6 firmware from 5.7 branch
+fc627e98 amdgpu: update PSP 13.0.5 firmware from 5.7 branch
+f5b7964e amdgpu: update SDMA 5.2.6 firmware from 5.7 branch
+5837f76c amdgpu: update DCN 3.1.6 firmware from 5.7 branch
+35d98aaf amdgpu: update GC 10.3.7 firmware from 5.7 branch
+8ba97109 amdgpu: update PSP 13.0.8 firmware from 5.7 branch
+75e5b634 amdgpu: update SDMA 5.2.7 firmware from 5.7 branch
+95ec6f69 amdgpu: update raven firmware from 5.7 branch
+18b60f44 i915: Update MTL DMC to v2.17
+cef80743 Add new Makefile target to build a deb and rpm package
+ce33c671 Build debian and fedora images
+312b5d8a Merge branch 'iwlwifi-fw-2023-09-27' into 'main'
+957828e1 linux-firmware: Update firmware file for Intel Bluetooth 9260
+717c1a5d linux-firmware: Update firmware file for Intel Bluetooth 9560
+a3e18aff linux-firmware: Update firmware file for Intel Bluetooth AX210
+3fed6fb8 linux-firmware: Update firmware file for Intel Bluetooth AX211
+3ce0e06b linux-firmware: Update firmware file for Intel Bluetooth AX211
+8c1e8c66 linux-firmware: Update firmware file for Intel Bluetooth AX201
+bbf94191 linux-firmware: Update firmware file for Intel Bluetooth AX201
+ab0c0a78 linux-firmware: Add firmware file for Intel Bluetooth AX211
+2316c3d0 Merge branch 'intel-bt-20231004' into 'main'
+58b8d3f3 Merge branch 'dmc-mtl_2.17' of git://anongit.freedesktop.org/drm/drm-firmware into dmc-mtl
+8e57de05 Merge branch 'dmc-mtl' into 'main'
+5105ff4b Merge branch 'mlimonci/upstream-packaging' into 'main'
+389575a8 WHENCE: add symlink for BananaPi M64
+7727f7e3 Merge branch 'patch-1696561325' into 'main'
+92e24e04 iwlwifi: add a missing FW from core80-39 release
+44a9510c i915: Add GuC v70.13.1 for DG2, TGL, ADL-P and MTL
+1be48f85 Merge branch 'pr-24-1697222431' into 'main'
+4d619071 Add a script for a robot to open up pull requests
+0da49b90 linux-firmware: add Amlogic bluetooth firmware
+63e8aa40 Merge branch 'main' into 'main'
+a3bcbbf2 amdgpu: update SMU 13.0.0 firmware
+8ff933de Merge branch 'robot/pr-0-1697570762' into 'main'
+f893135f Merge branch 'robot/pr-0-1697658135' into 'main'
+ecaeef5d Add support for sending emails while processing a PR/patch
+29e9aa86 Merge branch 'mlimonci/robot' into 'main'
+06afd7f9 linux-firmware: Update AMD cpu microcode
+1115cf5c Merge branch 'robot/patch-0-1697735493' into 'main'
+6ed75465 Fix the robot email script
+d983107a Merge branch 'mlimonci/fix-email' into 'main'
+7bfa5f4d Catch unicode decode errors
+3de241ed rtl_nic: update firmware of RTL8156B
+39d55392 Use `git am` instead of `b4 shazam`
+ad84593d Merge branch 'robot/patch-23-1698074268' into 'main'
+5f560c1e Merge branch 'mlimonci/unicode' into 'main'
+4ee01756 Merge branch 'mlimonci/use-am' into 'main'
+b22703ca Disable deb and rpm CI other than at release
+80703e05 Merge branch 'mlimonci/less-ci' into 'main'
+37761e2b Intel Bluetooth: Update firmware file for Intel Bluetooth BE200
+dd6368d9 Intel Bluetooth: Update firmware file for Intel Bluetooth Magnetor AX211
+fabc67bf Intel Bluetooth: Update firmware file for Intel Bluetooth Magnetor AX201
+581a25e6 Intel Bluetooth: Update firmware file for Intel Bluetooth AX203
+bc0b7dfa Intel Bluetooth: Update firmware file for Intel Bluetooth AX203
+2ceaa29d Merge branch 'core80' into 'main'
+dcec764d Intel Bluetooth: Update firmware file for Intel Bluetooth Magnetor AX101
+1962446e Intel Bluetooth: Update firmware file for Intel Bluetooth AX210
+4c092813 Intel Bluetooth: Update firmware file for Intel Bluetooth AX211
+59aaeac9 Intel Bluetooth: Update firmware file for Intel Bluetooth AX211
+2b304bfe Merge branch 'main' into 'main'
+02df6e4f rtw89: 8851b: update fw to v0.29.41.3
+7a916315 rtw89: 8852b: update fw to v0.29.29.4
+2afd1423 rtw89: 8852b: update fw to v0.29.29.5
+1ba9408e linux-firmware: ixp4xx: Add the IXP4xx firmware
+411938ad Merge branch 'mlimonci/rtw89' into 'main'
+185e84b8 Merge branch 'ixp4xx' into 'main'
+724c77e5 qca: add bluetooth firmware for WCN3988
+19342f15 Merge branch 'apbtfw' into 'main'
+65a89b16 amdgpu: DMCUB updates for various AMDGPU ASICs
+df98199f Merge tag 'amd-2023-11-03'
+9a3bf241 Merge branch 'main' into 'main'
+9a170370 Intel Bluetooth: Update firmware file for Solar Intel Bluetooth AX210
+cdecf243 Intel Bluetooth: Update firmware file for Solar Intel Bluetooth AX211
+be41333c Intel Bluetooth: Update firmware file for SolarF Intel Bluetooth AX211
+34600f06 Intel Bluetooth: Update firmware file for Solar Intel Bluetooth AX203
+8563348b Intel Bluetooth: Update firmware file for SolarF Intel Bluetooth AX203
+ed34505f Intel Bluetooth: Update firmware file for Magnetor Intel Bluetooth AX211
+92faee69 Intel Bluetooth: Update firmware file for Magnetor Intel Bluetooth AX203
+19c3c023 Intel Bluetooth: Update firmware file for Magnetor Intel Bluetooth AX101
+a5a6dded Intel Bluetooth: Update firmware file for Intel Bluetooth BE200
+2340796d Merge branch 'main' into 'main'
+f4a3c72e nvidia: add GSP-RM version 535.113.01 firmware images
+16b92b8d Merge branch 'mlimonci/nvidia-gsp-rm-535' into 'main'
+cc8a7d10 Fix classification of some pull requests
+4c55675d Fix symlink creation for some files
+195eae59 Add checks for destination directory being specified
+cf8315de Ensure rdfind is installed
+b79f31cf Merge branch 'mlimonci/fix-symlinks' into 'main'
+1ee89a11 Merge branch 'mlimonci/robot-fix' into 'main'
+c57c8384 amdgpu: DMCUB updates for various AMDGPU ASICs
+1737b581 Merge tag 'amd-2023-11-10' into amd-2023-11-10
+74158e7a Merge branch 'amd-2023-11-10' into 'main'
+bf5150dd Intel Bluetooth: Update firmware file for Solar Intel Bluetooth AX210
+80a378a2 Intel Bluetooth: Update firmware file for Solar Intel Bluetooth AX211
+b021ad7c Intel Bluetooth: Update firmware file for SolarF Intel Bluetooth AX211
+bfc7dbe7 Intel Bluetooth: Update firmware file for Solar Intel Bluetooth AX203
+4eb64f9b Intel Bluetooth: Update firmware file for SolarF Intel Bluetooth AX203
+c7c5ca39 Intel Bluetooth: Update firmware file for Solar Intel Bluetooth AX101
+80907d76 Intel Bluetooth: Update firmware file for SolarF Intel Bluetooth AX101
+8b5a4168 Intel Bluetooth: Update firmware file for Magnetor Intel Bluetooth AX211
+5e40b6aa Intel Bluetooth: Update firmware file for Magnetor Intel Bluetooth AX203
+307a4e50 Intel Bluetooth: Update firmware file for Magnetor Intel Bluetooth AX101
+6910095b linux-firmware: add firmware for mt7988 internal 2.5G ethernet phy
+bd4df953 Merge branch 'main' into 'main'
+398b4605 Merge branch 'robot/patch-0-1699862686' into 'main'
+1f8f61d5 Process pull requets directly from mbox
+05ac293b Add extra debugging output when processing pull requests
+d011ba69 Add a workaround for gitlab.freedesktop.org pull requests
+b72eeb60 Merge branch 'mlimonci/robot-pr-improvements' into 'main'
+978dff67 linux-firmware: Add firmware for Cirrus CS35L41 on 2024 ASUS Zenbook Laptops
+4f498d09 linux-firmware: Add firmware for Cirrus CS35L41 on HP G11 Laptops
+4fc5801e iwlwifi: update cc/Qu/QuZ firmwares for core83-55 release
+a07fd0b9 iwlwifi: add new FWs from core83-55 release
+124b6639 Merge branch 'robot/pr-0-1700068965' into 'main'
+9009038b Enable deb and rpm builds on tags
+f27dec61 iwlwifi: fix for the new FWs from core83-55 release
+58ec4325 Merge branch 'mlimonci/release-packages' into 'main'
+8228c222 Try both utf-8 and windows-1252 for decoding email
+b486a13b Merge branch 'robot/pr-17-1700153404' into 'main'
+6723a8d9 Merge branch 'robot/pr-5-1700153542' into 'main'
+bfd5f0b9 Make email replies more resilient
+45109014 i915: Update MTL DMC to v2.19
+f81145a0 Merge branch 'robot/pr-0-1700234575' into 'main'
+7124ce30 Merge branch 'mlimonci/encoding' into 'main'
+c03db704 amdgpu: update DMCUB firmware to 0.0.193.0 for DCN31 and DCN314
+ba1aa06f Intel Bluetooth: Update firmware file for Intel Bluetooth BE200
+a41fa7c5 mediatek: Sync shared memory structure changes
+c3ce13b3 Merge branch 'main' into 'main'
+9552083a Merge branch 'robot/pr-0-1700470117' into 'main'
+0c211dbe Merge branch 'amd-staging' into 'main'
+5e9fdab5 mediatek: Remove an unused packed library
+bef5a36d Merge branch 'robot/patch-1-1700555775' into 'main'
+47582844 ice: update ice DDP package to 1.3.35.0
+0628ba79 ice: update ice DDP comms package to 1.3.45.0
+ad0bbae4 Merge branch 'robot/patch-1-1700674626' into 'main'
+a5539dc1 Merge branch 'robot/patch-2-1700674629' into 'main'
+9afbbf25 powervr: add firmware for Imagination Technologies AXE-1-16M GPU
+fad38ab8 Merge branch 'powervr-2023-11-23' into 'main'
+ea682fba qcom: update Venus firmware file for v6.0
+18f56bf3 qcom: update qcm2290/qrb4210 WiFi firmware file
+0bba2c99 qcom: update qcm2290 firmware
+6cfedcbb qcom: update qrb4210 firmware
+87427f23 amdgpu: update DMCUB firmware to 0.0.194.0 for DCN321 and DCN32
+f6d61ded Merge branch 'robot/pr-0-1700887115' into 'main'
+c6823ce2 Makefile, copy-firmware: Use portable "command -v" to detect installed programs
+9fdcf639 Merge branch 'robot/patch-0-1701018572' into 'main'
+0a18a729 linux-firmware: update firmware for MT7921 WiFi device
+6b91b2ef linux-firmware: update firmware for MT7922 WiFi device
+cc44f3b8 Merge branch 'mt7921-wifi' into 'main'
+1366b827 linux-firmware: update firmware for mediatek bluetooth chip (MT7921)
+5955de2f Merge branch 'mt7922-wifi' into 'main'
+1180974e linux-firmware: update firmware for mediatek bluetooth chip (MT7922)
+351f0c67 Merge branch 'mt7921-bt' into 'main'
+f440b984 ice: update ice DDP wireless_edge package to 1.3.13.0
+adbdc241 Merge branch 'mt7922-bt' into 'main'
+f8c611e7 Merge branch 'ice-edge' into 'main'
+4124f8f9 Make rdfind optional
+4fab4e51 Merge branch 'rdfind-opt' into 'main'
+98eed92e rtl_bt: Update RTL8852A BT USB firmware to 0xDFC8_145F
+5aadb590 Merge branch 'robot/patch-0-1701175489' into 'main'
+d9f6088f Add a COPYOPTS variable
+aae60524 Merge branch 'make-opts' into 'main'
+37db2a09 s5p-mfc: Add MFC v12 Firmware
+034e24b8 Merge branch 's5p-mfc-v12' into 'main'
+ddc99b3d linux-firmware: add firmware for en8811h 2.5G ethernet phy
+dbf82492 cxgb4: Update firmware to revision 1.27.5.0
+129e07d9 Merge branch 'robot/pr-0-1701358064' into 'main'
+f63dd70d Merge branch 'robot/patch-0-1701352637' into 'main'
+b9d971b9 Merge branch 'rb12-update' into 'main'
+bfc33c1e linux-firmware: Update AMD cpu microcode
+c004dbee Merge branch 'robot/patch-0-1701808157' into 'main'
+23feb609 wfx: fix broken firmware
+1505c948 wfx: update to firmware 3.17
+f2e52a1c Merge branch 'wfx' into 'main'
+
+Signed-off-by: Tianling Shen <cnsztl@immortalwrt.org>
+---
+ package/firmware/linux-firmware/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/package/firmware/linux-firmware/Makefile b/package/firmware/linux-firmware/Makefile
+index ef6cd075de..79341c30cb 100644
+--- a/package/firmware/linux-firmware/Makefile
++++ b/package/firmware/linux-firmware/Makefile
+@@ -8,12 +8,12 @@
+ include $(TOPDIR)/rules.mk
+ 
+ PKG_NAME:=linux-firmware
+-PKG_VERSION:=20230804
++PKG_VERSION:=20231211
+ PKG_RELEASE:=1
+ 
+ PKG_SOURCE_URL:=@KERNEL/linux/kernel/firmware
+ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
+-PKG_HASH:=88d46c543847ee3b03404d4941d91c92974690ee1f6fdcbee9cef3e5f97db688
++PKG_HASH:=96af7e4b5eabd37869cdb3dcbb7ab36911106d39b76e799fa1caab16a9dbe8bb
+ 
+ PKG_MAINTAINER:=Felix Fietkau <nbd@nbd.name>
+ 
+-- 
+2.34.1
+
