@@ -1,0 +1,36 @@
+From c4ebfcae793441aa948174999b91a1e435098aa4 Mon Sep 17 00:00:00 2001
+From: Weijie Gao <hackpascal@gmail.com>
+Date: Sun, 7 Jan 2024 03:31:28 +0800
+Subject: [PATCH 4/7] gpio-button-hotplug: fix 6.2 build failure
+
+devm_gpiod_get_from_of_node() was removed since linux 6.2.
+devm_fwnode_gpiod_get() is the recommended replacement.
+
+Link:
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/drivers/gpio/gpiolib-devres.c?id=650f2dc970539b3344a98c4bd18efa309e66623b
+
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Weijie Gao <hackpascal@gmail.com>
+---
+ package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c b/package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c
+index 522085bb2f..e36494c2fe 100644
+--- a/package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c
++++ b/package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c
+@@ -538,8 +538,9 @@ static int gpio_keys_button_probe(struct platform_device *pdev,
+ 			struct device_node *child =
+ 				of_get_next_child(dev->of_node, prev);
+ 
+-			bdata->gpiod = devm_gpiod_get_from_of_node(dev,
+-				child, "gpios", 0, GPIOD_IN, desc);
++			bdata->gpiod = devm_fwnode_gpiod_get(dev,
++				of_fwnode_handle(child), NULL, GPIOD_IN,
++				desc);
+ 
+ 			prev = child;
+ 		}
+-- 
+2.43.0
+

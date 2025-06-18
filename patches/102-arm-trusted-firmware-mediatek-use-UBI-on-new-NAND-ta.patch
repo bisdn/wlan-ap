@@ -1,0 +1,83 @@
+From b1444a3ee8eedb8006045a9e3865b380187acda8 Mon Sep 17 00:00:00 2001
+From: Daniel Golle <daniel@makrotopia.org>
+Date: Fri, 12 Jan 2024 02:36:59 +0000
+Subject: [PATCH 3/7] arm-trusted-firmware-mediatek: use UBI on new NAND
+ targets
+
+Make use of recently added UBI support in MediaTek's ARM
+TrustedFirmware-A on new MT7988 SoC.
+
+Load fip from static UBI volume instead of fixed offset on SPIM-NAND
+and SNFI.
+
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+---
+ .../arm-trusted-firmware-mediatek/Makefile    | 24 ++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
+
+diff --git a/package/boot/arm-trusted-firmware-mediatek/Makefile b/package/boot/arm-trusted-firmware-mediatek/Makefile
+index 718ebf99e0..386179e27b 100644
+--- a/package/boot/arm-trusted-firmware-mediatek/Makefile
++++ b/package/boot/arm-trusted-firmware-mediatek/Makefile
+@@ -32,6 +32,7 @@ define Trusted-Firmware-A/Default
+   NAND_TYPE:=
+   BOARD_QFN:=
+   DRAM_USE_COMB:=
++  USE_UBI:=
+ endef
+ 
+ define Trusted-Firmware-A/mt7622-nor-1ddr
+@@ -327,6 +328,15 @@ define Trusted-Firmware-A/mt7988-snand-comb
+   DRAM_USE_COMB:=1
+ endef
+ 
++define Trusted-Firmware-A/mt7988-snand-ubi-comb
++  NAME:=MediaTek MT7988 (SPI-NAND via SNFI, UBI)
++  BOOT_DEVICE:=snand
++  BUILD_SUBTARGET:=filogic
++  PLAT:=mt7988
++  DRAM_USE_COMB:=1
++  USE_UBI:=1
++endef
++
+ define Trusted-Firmware-A/mt7988-spim-nand-comb
+   NAME:=MediaTek MT7988 (SPI-NAND via SPIM)
+   BOOT_DEVICE:=spim-nand
+@@ -335,6 +345,15 @@ define Trusted-Firmware-A/mt7988-spim-nand-comb
+   DRAM_USE_COMB:=1
+ endef
+ 
++define Trusted-Firmware-A/mt7988-spim-nand-ubi-comb
++  NAME:=MediaTek MT7988 (SPI-NAND via SPIM, UBI)
++  BOOT_DEVICE:=spim-nand
++  BUILD_SUBTARGET:=filogic
++  PLAT:=mt7988
++  DRAM_USE_COMB:=1
++  USE_UBI:=1
++endef
++
+ TFA_TARGETS:= \
+ 	mt7622-nor-1ddr \
+ 	mt7622-nor-2ddr \
+@@ -373,7 +392,9 @@ TFA_TARGETS:= \
+ 	mt7988-nor-comb \
+ 	mt7988-sdmmc-comb \
+ 	mt7988-snand-comb \
+-	mt7988-spim-nand-comb
++	mt7988-snand-ubi-comb \
++	mt7988-spim-nand-comb \
++	mt7988-spim-nand-ubi-comb
+ 
+ TFA_MAKE_FLAGS += \
+ 	BOOT_DEVICE=$(BOOT_DEVICE) \
+@@ -384,6 +405,7 @@ TFA_MAKE_FLAGS += \
+ 	HAVE_DRAM_OBJ_FILE=yes \
+ 	$(if $(DDR3_FLYBY),DDR3_FLYBY=1) \
+ 	$(if $(DRAM_USE_COMB),DRAM_USE_COMB=1) \
++	$(if $(USE_UBI),UBI=1) \
+ 	all
+ 
+ define Package/trusted-firmware-a/install
+-- 
+2.43.0
+
