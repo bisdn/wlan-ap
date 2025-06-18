@@ -1,0 +1,18 @@
+---
+profile: bananapi_bpi-r4
+target: mediatek
+subtarget: filogic
+description: Build image for the Bananapi r4
+image: bin/targets/mediatek/mt7988/openwrt-mediatek-mt7988-bananapi_bpi-r4-squashfs-sysupgrade.bin
+feeds:
+  - name: filogic_24_10
+    path: ../../feeds/filogic-24.10
+packages:
+  - mediatek
+include:
+  - ucentral-ap
+diffconfig: |  
+  # CONFIG_PACKAGE_kmod-nft-offload is not set
+  # CONFIG_PACKAGE_procd-ujail is not set
+  # CONFIG_PACKAGE_kmod-batman-adv is not set
+  # CONFIG_PACKAGE_unetd is not set
